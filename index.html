@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Code Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+      // Configure PDF.js worker for the text extraction service
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Industrial High-Visibility Scrollbar (As per user image) */
+        .custom-scrollbar::-webkit-scrollbar { 
+          width: 14px; /* Thicker for easier grabbing */
+        }
+        .custom-scrollbar::-webkit-scrollbar-track { 
+          background: #f1f5f9; 
+          border-left: 1px solid #e2e8f0;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb { 
+          background: #94a3b8; /* Slate grey thumb */
+          border-radius: 7px; 
+          border: 3px solid #f1f5f9; /* Creates a gap effect around the thumb */
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { 
+          background: #64748b; /* Darker on hover */
+        }
+        
+        /* Specific scrollbar for the PDF viewer to ensure it stands out */
+        .pdf-scroll-area::-webkit-scrollbar {
+          width: 16px;
+        }
+        .pdf-scroll-area::-webkit-scrollbar-thumb {
+          background: #475569;
+          border: 4px solid #f1f5f9;
+        }
+
+        /* PDF Viewer Styling */
+        .react-pdf__Page__textContent, .react-pdf__Page__annotations {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: all;
+          opacity: 1;
+        }
+
+        /* Essential for Text Selection */
+        .react-pdf__Page__textContent span {
+          color: transparent;
+          position: absolute;
+          white-space: pre;
+          cursor: text;
+          transform-origin: 0% 0%;
+        }
+
+        .react-pdf__Page__canvas {
+          margin: 0 auto;
+          box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+          border-radius: 4px;
+          background: white;
+        }
+
+        .react-pdf__Page {
+          position: relative;
+          display: inline-block;
+        }
+
+        .react-pdf__Document {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        /* Technical Report Typography */
+        .prose-technical h3 {
+          font-weight: 800;
+          color: #0f172a;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          font-size: 0.85rem;
+          margin-top: 2rem;
+          margin-bottom: 1rem;
+          border-left: 4px solid #3b82f6;
+          padding-left: 0.75rem;
+        }
+        .prose-technical table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 1.5rem 0;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 0.75rem;
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 0.5rem;
+          overflow: hidden;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .prose-technical th, .prose-technical td {
+          border: 1px solid #f1f5f9;
+          padding: 0.875rem 1rem;
+          text-align: left;
+          line-height: 1.4;
+        }
+        .prose-technical tr:first-child td, .prose-technical tr:first-child th {
+          background: #f8fafc;
+          font-weight: 800;
+          color: #1e293b;
+          border-bottom: 2px solid #e2e8f0;
+        }
+        .prose-technical tr:nth-child(even) {
+          background: #f9fafb;
+        }
+        
+        /* Highlight Styling */
+        .technical-highlight {
+          background: #fef9c3;
+          color: #854d0e;
+          padding: 0.1rem 0.35rem;
+          border-radius: 0.25rem;
+          font-weight: 700;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        @keyframes pulse-highlight {
+          0% { border-color: #3b82f6; box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+          70% { border-color: #3b82f6; box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+          100% { border-color: #e2e8f0; box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+        .new-response-animation {
+          animation: pulse-highlight 2s ease-out;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react-pdf": "https://esm.sh/react-pdf@^9.2.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-slate-50 text-slate-900">
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
