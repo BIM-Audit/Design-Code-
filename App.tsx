@@ -529,8 +529,13 @@ const App: React.FC = () => {
       await refreshLibrary();
       setIsCreatingCountry(false);
       setNewCountryData({ name: '', code: '', flag: '🌍', description: '', color: 'bg-blue-600', fullName: '' });
-    } catch (err) {
-      alert("This region code already exists. Please use a unique code.");
+    } catch (err: any) {
+      console.error('Create country failed:', err);
+      if (err.message?.includes('400') || err.message?.includes('exists')) {
+        alert("This region code already exists. Please use a unique code.");
+      } else {
+        alert("Server Error: Your hosting (Netlify) might not support the backend server required for this app. Please use a platform like Render or Railway for full-stack apps.");
+      }
     }
   };
 

@@ -29,7 +29,7 @@ export const saveFileToDB = async (file: DesignCodeFile): Promise<void> => {
     body: formData,
   });
   
-  if (!response.ok) throw new Error('Failed to save file');
+  if (!response.ok) throw new Error(`Failed to save file (Status: ${response.status})`);
 };
 
 export const getAllFilesFromDB = async (): Promise<DesignCodeFile[]> => {
@@ -45,7 +45,7 @@ export const deleteFileFromDB = async (id: string): Promise<void> => {
   const response = await fetch(`/api/files/${id}`, {
     method: 'DELETE',
   });
-  if (!response.ok) throw new Error('Failed to delete file');
+  if (!response.ok) throw new Error(`Failed to delete file (Status: ${response.status})`);
 };
 
 // Folder Operations
@@ -55,7 +55,7 @@ export const saveFolderToDB = async (folder: FolderRecord): Promise<void> => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(folder),
   });
-  if (!response.ok) throw new Error('Failed to save folder');
+  if (!response.ok) throw new Error(`Failed to save folder (Status: ${response.status})`);
 };
 
 export const getAllFoldersFromDB = async (): Promise<FolderRecord[]> => {
@@ -68,7 +68,7 @@ export const deleteFolderFromDB = async (id: string): Promise<void> => {
   const response = await fetch(`/api/folders/${id}`, {
     method: 'DELETE',
   });
-  if (!response.ok) throw new Error('Failed to delete folder');
+  if (!response.ok) throw new Error(`Failed to delete folder (Status: ${response.status})`);
 };
 
 // Country Operations
@@ -78,7 +78,7 @@ export const saveCountryToDB = async (country: CountryRecord): Promise<void> => 
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(country),
   });
-  if (!response.ok) throw new Error('Failed to save country');
+  if (!response.ok) throw new Error(`Failed to save country (Status: ${response.status})`);
 };
 
 export const getAllCountriesFromDB = async (): Promise<CountryRecord[]> => {
@@ -91,7 +91,7 @@ export const deleteCountryFromDB = async (code: string): Promise<void> => {
   const response = await fetch(`/api/countries/${code}`, {
     method: 'DELETE',
   });
-  if (!response.ok) throw new Error('Failed to delete country');
+  if (!response.ok) throw new Error(`Failed to delete country (Status: ${response.status})`);
 };
 
 export const onDataUpdate = (callback: (update: any) => void) => {
